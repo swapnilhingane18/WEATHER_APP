@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import SearchBox from './SearchBox.jsx'
+import React, { useState } from "react";
+import SearchBox from "./SearchBox";
+import WeatherBackground from "./WeatherBackground";
 
-
-
-function App() {
+export default function App() {
+  const [weatherType, setWeatherType] = useState(null);
 
   return (
     <>
-    <SearchBox/>
-    </>
-  )
-}
+      <WeatherBackground weatherType={weatherType} />
 
-export default App
+      <SearchBox setWeatherType={setWeatherType} />
+    </>
+  );
+}

@@ -5,7 +5,7 @@ import SendIcon from "@mui/icons-material/Send";
 import "./SearchBox.css";
 import InfoBox from "./InfoBox.jsx";
 
-export default function SearchBox() {
+export default function SearchBox({ setWeatherType }) {
   const [city, setCity] = useState("");
   const [weatherInfo, setWeatherInfo] = useState(null);
 
@@ -23,6 +23,7 @@ export default function SearchBox() {
     }
 
     setWeatherInfo(data);
+    setWeatherType(data.weather[0].main); // ⭐ KEY LINE
   };
 
   const handleSubmit = async (event) => {
