@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import WeatherInfo from "./WeatherInfo";
+import WeatherIcon from "./WeatherIcon";
+
 
 export default function InfoBox({ weatherInfo }) {
   if (!weatherInfo) return null;
@@ -16,22 +18,38 @@ export default function InfoBox({ weatherInfo }) {
   let imageURL =
     "https://images.unsplash.com/photo-1601962986711-21760faddd7f?w=600&auto=format&fit=crop&q=60";
 
-  if (weatherType === "Clouds") {
+  if (weatherType === "Clear") {
     imageURL =
-      "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?w=600&auto=format&fit=crop&q=60";
-  } else if (weatherType === "Clear") {
+      "https://plus.unsplash.com/premium_photo-1727730047398-49766e915c1d?w=600&auto=format&fit=crop&q=60";
+  } else if (weatherType === "Clouds") {
     imageURL =
-      "https://images.unsplash.com/photo-1590077428593-a55bb07c4665?w=600&auto=format&fit=crop&q=60";
+      "https://plus.unsplash.com/premium_photo-1674834298045-e405bc99076b?w=600&auto=format&fit=crop&q=60";
   } else if (weatherType === "Rain" || weatherType === "Drizzle") {
     imageURL =
-      "https://media.istockphoto.com/id/498063665/photo/rainy-landscape.webp";
+      "https://images.unsplash.com/photo-1428592953211-077101b2021b?w=600&auto=format&fit=crop&q=60";
   } else if (weatherType === "Snow") {
     imageURL =
-      "https://plus.unsplash.com/premium_photo-1670106817708-a914a1634370?w=600&auto=format&fit=crop&q=60";
+      "https://plus.unsplash.com/premium_photo-1663090593977-9923cc536f3b?w=600&auto=format&fit=crop&q=60";
   } else if (weatherType === "Thunderstorm") {
     imageURL =
-      "https://images.unsplash.com/photo-1507607422988-9a1b54b0c3d8?w=600&auto=format&fit=crop&q=60";
+      "https://plus.unsplash.com/premium_photo-1726818265070-c08eb719d77c?w=600&auto=format&fit=crop&q=60";
+  } else if (
+    weatherType === "Mist" ||
+    weatherType === "Fog" ||
+    weatherType === "Haze" ||
+    weatherType === "Smoke" ||
+    weatherType === "Dust" ||
+    weatherType === "Sand" ||
+    weatherType === "Ash"
+  ) {
+    imageURL =
+      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&auto=format&fit=crop&q=60";
+  } else if (weatherType === "Squall" || weatherType === "Tornado") {
+    imageURL =
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&auto=format&fit=crop&q=60";
   }
+
+
 
   return (
     <Card sx={{ maxWidth: 345, margin: "20px auto" }}>
@@ -41,6 +59,7 @@ export default function InfoBox({ weatherInfo }) {
 
         <CardContent>
           <Typography gutterBottom variant="h5">
+            <WeatherIcon weatherType={weatherInfo.weather[0].main} />
             Weather in {weatherInfo.name}
           </Typography>
 
