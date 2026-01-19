@@ -13,93 +13,63 @@ import WeatherIcon from "./WeatherIcon";
 export default function InfoBox({ weatherInfo }) {
   if (!weatherInfo) return null;
 
-  /* ---------------- WEATHER TYPE ---------------- */
   const weatherType = weatherInfo.weather[0].main;
 
-  /* ---------------- IMAGE URLS ---------------- */
   const IMAGE_MAP = {
-    Clear:
-      "https://plus.unsplash.com/premium_photo-1727730047398-49766e915c1d?w=600&auto=format&fit=crop&q=60",
-
-    Clouds:
-      "https://plus.unsplash.com/premium_photo-1674834298045-e405bc99076b?w=600&auto=format&fit=crop&q=60",
-
-    Rain:
-      "https://images.unsplash.com/photo-1428592953211-077101b2021b?w=600&auto=format&fit=crop&q=60",
-
-    Drizzle:
-      "https://images.unsplash.com/photo-1428592953211-077101b2021b?w=600&auto=format&fit=crop&q=60",
-
-    Snow:
-      "https://plus.unsplash.com/premium_photo-1663090593977-9923cc536f3b?w=600&auto=format&fit=crop&q=60",
-
-    Thunderstorm:
-      "https://plus.unsplash.com/premium_photo-1726818265070-c08eb719d77c?w=600&auto=format&fit=crop&q=60",
-
-    Mist:
-      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&auto=format&fit=crop&q=60",
-
-    Fog:
-      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&auto=format&fit=crop&q=60",
-
-    Haze:
-      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&auto=format&fit=crop&q=60",
-
-    Smoke:
-      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&auto=format&fit=crop&q=60",
-
-    Dust:
-      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&auto=format&fit=crop&q=60",
-
-    Sand:
-      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&auto=format&fit=crop&q=60",
-
-    Ash:
-      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&auto=format&fit=crop&q=60",
-
-    Squall:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&auto=format&fit=crop&q=60",
-
-    Tornado:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&auto=format&fit=crop&q=60",
+    Clear: "https://images.unsplash.com/photo-1590077428593-a55bb07c4665",
+    Clouds: "https://images.unsplash.com/photo-1501630834273-4b5604d2ee31",
+    Rain: "https://images.unsplash.com/photo-1428592953211-077101b2021b",
+    Drizzle: "https://images.unsplash.com/photo-1428592953211-077101b2021b",
+    Snow: "https://images.unsplash.com/photo-1608889175250-c3b0c1667d02",
+    Thunderstorm: "https://images.unsplash.com/photo-1507607422988-9a1b54b0c3d8",
+    Mist: "https://images.unsplash.com/photo-1502082553048-f009c37129b9",
+    Fog: "https://images.unsplash.com/photo-1502082553048-f009c37129b9",
+    Haze: "https://images.unsplash.com/photo-1502082553048-f009c37129b9",
   };
 
-  const DEFAULT_IMAGE =
-    "https://images.unsplash.com/photo-1601962986711-21760faddd7f?w=600&auto=format&fit=crop&q=60";
+  const imageURL =
+    IMAGE_MAP[weatherType] ||
+    "https://images.unsplash.com/photo-1601962986711-21760faddd7f";
 
-  const imageURL = IMAGE_MAP[weatherType] || DEFAULT_IMAGE;
+  const handleShare = async () => {
+    const text = `
+🌤 Weather in ${weatherInfo.name}
+🌡 Temp: ${weatherInfo.main.temp} °C
+🤒 Feels Like: ${weatherInfo.main.feels_like} °C
+☁ Weather: ${weatherType}
+💨 Wind: ${weatherInfo.wind.speed} m/s
+    `;
 
-  /* ---------------- BACKGROUND GRADIENT ---------------- */
-  const GRADIENT_MAP = {
-    Clear: "linear-gradient(to right, #fceabb, #f8b500)",
-    Clouds: "linear-gradient(to right, #d7d2cc, #304352)",
-    Rain: "linear-gradient(to right, #4b79a1, #283e51)",
-    Drizzle: "linear-gradient(to right, #4b79a1, #283e51)",
-    Snow: "linear-gradient(to right, #e6dada, #274046)",
-    Thunderstorm: "linear-gradient(to right, #232526, #414345)",
-    Mist: "linear-gradient(to right, #bdc3c7, #2c3e50)",
-    Fog: "linear-gradient(to right, #bdc3c7, #2c3e50)",
-    Haze: "linear-gradient(to right, #bdc3c7, #2c3e50)",
+    if (navigator.share) {
+      await navigator.share({
+        title: `Weather in ${weatherInfo.name}`,
+        text,
+        url: window.location.href,
+      });
+    } else {
+      await navigator.clipboard.writeText(text);
+      alert("Weather copied to clipboard!");
+    }
   };
 
-  const backgroundStyle = {
-    background:
-      GRADIENT_MAP[weatherType] ||
-      "linear-gradient(to right, #bdc3c7, #2c3e50)",
-    color: "#fff",
-    transition: "all 0.6s ease",
-  };
-
-  /* ---------------- UI ---------------- */
   return (
-    <Card sx={{ maxWidth: 345, margin: "20px auto" }} style={backgroundStyle}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        margin: "30px auto",
+        background: "rgba(0,0,0,0.55)",
+        backdropFilter: "blur(12px)",
+        borderRadius: "16px",
+        color: "#fff",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+      }}
+    >
       <CardActionArea>
-        <CardMedia component="img" height="140" image={imageURL} alt="weather" />
+        <CardMedia component="img" height="160" image={imageURL} alt="weather" />
 
         <CardContent>
-          <Typography gutterBottom variant="h5" sx={{ fontWeight: "bold" }}>
-            <WeatherIcon weatherType={weatherType} /> Weather in{" "}
-            {weatherInfo.name}
+          <Typography variant="h5" sx={{ fontWeight: "bold", mb: 1 }}>
+            <WeatherIcon weatherType={weatherType} /> Weather in {weatherInfo.name}
           </Typography>
 
           <WeatherInfo weatherInfo={weatherInfo} />
@@ -107,7 +77,17 @@ export default function InfoBox({ weatherInfo }) {
       </CardActionArea>
 
       <CardActions>
-        <Button size="small" sx={{ color: "#fff" }}>
+        <Button
+          variant="outlined"
+          onClick={handleShare}
+          sx={{
+            color: "#fff",
+            borderColor: "#fff",
+            "&:hover": {
+              backgroundColor: "rgba(255,255,255,0.15)",
+            },
+          }}
+        >
           Share
         </Button>
       </CardActions>

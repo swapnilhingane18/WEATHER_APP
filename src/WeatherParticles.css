@@ -1,0 +1,80 @@
+/* ===== RAIN ===== */
+.rain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.drop {
+  position: absolute;
+  bottom: 100%;
+  width: 2px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  animation: rain linear infinite;
+}
+
+@keyframes rain {
+  to {
+    transform: translateY(120vh);
+  }
+}
+
+/* ===== SNOW ===== */
+.snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.flake {
+  position: absolute;
+  top: -10px;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: snow linear infinite;
+}
+
+@keyframes snow {
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+/* ===== LIGHTNING ⚡ ===== */
+.lightning {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  z-index: 3;
+  animation: lightningFlash 6s infinite;
+}
+
+@keyframes lightningFlash {
+  0%, 96%, 100% {
+    opacity: 0;
+  }
+  97% {
+    opacity: 0.8;
+  }
+  98% {
+    opacity: 0.2;
+  }
+}
+
+/* ===== WIND SWAY 🌬 ===== */
+.wind {
+  animation: sway 4s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(15px); }
+  100% { transform: translateX(0); }
+}

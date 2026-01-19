@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
+import InfoBox from "./InfoBox";
 import "./SearchBox.css";
-import InfoBox from "./InfoBox.jsx";
 
 export default function SearchBox({ setWeatherType }) {
   const [city, setCity] = useState("");
@@ -13,9 +13,9 @@ export default function SearchBox({ setWeatherType }) {
   const API_KEY = "c6fba9098b53169ea56e7dc3eabeeb83";
 
   const getWeatherInfo = async () => {
-    let url = `${API_URL}?q=${city}&appid=${API_KEY}&units=metric`;
-    let res = await fetch(url);
-    let data = await res.json();
+    const url = `${API_URL}?q=${city}&appid=${API_KEY}&units=metric`;
+    const res = await fetch(url);
+    const data = await res.json();
 
     if (data.cod !== 200) {
       alert("City not found");
@@ -23,17 +23,17 @@ export default function SearchBox({ setWeatherType }) {
     }
 
     setWeatherInfo(data);
-    setWeatherType(data.weather[0].main); // ⭐ KEY LINE
+    setWeatherType(data.weather[0].main);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     await getWeatherInfo();
     setCity("");
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center", paddingTop: "40px" }}>
       <h3>SearchBox</h3>
 
       <form onSubmit={handleSubmit}>
@@ -44,10 +44,7 @@ export default function SearchBox({ setWeatherType }) {
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
-
-        <br />
-        <br />
-
+        <br /><br />
         <Button type="submit" variant="contained" endIcon={<SendIcon />}>
           Send
         </Button>

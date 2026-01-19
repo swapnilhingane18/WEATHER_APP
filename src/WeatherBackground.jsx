@@ -36,6 +36,7 @@ export default function WeatherBackground({ weatherType }) {
 
   return (
     <div
+      className={weatherType === "Clouds" ? "wind" : ""}
       style={{
         position: "fixed",
         inset: 0,
@@ -45,5 +46,6 @@ export default function WeatherBackground({ weatherType }) {
         animation: "gradientBG 12s ease infinite",
       }}
     />
+
   );
 }
